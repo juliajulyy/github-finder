@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Alert = ({ alert }) => {
   return (
@@ -8,6 +9,10 @@ const Alert = ({ alert }) => {
       </div>
     )
   );
+};
+
+Alert.propTypes = {
+  alert: PropTypes.object,
 };
 
 export default Alert;
