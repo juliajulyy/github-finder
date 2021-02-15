@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer } from 'react';
+import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Navbar from './components/layout/Navbar';
@@ -9,46 +9,25 @@ import Alert from './components/layout/Alert';
 import About from './components/pages/About';
 
 import GithubState from './context/github/GithubState';
+import AlertState from './context/alert/AlertState';
 
 import './App.css';
 
-const initialState = {
-  alert: null,
-};
-
-const reducer = (state, { type, payload }) => {
-  switch (type) {
-    case 'alert':
-      return { ...state, alert: payload };
-    default:
-      return state;
-  }
-};
-
-const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  // Set Alert
-  const setAlert = (msg, type) => {
-    dispatch({ type: 'alert', payload: { msg, type } });
-
-    setTimeout(() => dispatch({ type: 'alert', payload: null }), 5000);
-  };
-
-  return (
-    <GithubState>
+const App = () => (
+  <GithubState>
+    <AlertState>
       <Router>
         <div className='App'>
           <Navbar />
           <div className='container'>
-            <Alert alert={state.alert} />
+            <Alert />
             <Switch>
               <Route
                 exact
                 path='/'
                 render={(props) => (
                   <Fragment>
-                    <Search setAlert={setAlert} />
+                    <Search />
                     <Users />
                   </Fragment>
                 )}
@@ -59,8 +38,8 @@ const App = () => {
           </div>
         </div>
       </Router>
-    </GithubState>
-  );
-};
+    </AlertState>
+  </GithubState>
+);
 
 export default App;
